@@ -8,6 +8,16 @@ const SESSION_KEY = "wd_session_id";
 const DEVICE_KEY = "wd_device_label";
 let activeRefreshPromise: Promise<string | null> | null = null;
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+
+export function getApiUrl(path: string): string {
+  if (path.startsWith("/")) {
+    const base = API_BASE_URL.replace(/\/$/, "");
+    return `${base}${path}`;
+  }
+  return path;
+}
+
 function generateDeviceLabel(): string {
   const ua = typeof navigator !== "undefined" ? navigator.userAgent : "Unknown";
   const browser = ua.includes("Atlas")
@@ -102,7 +112,7 @@ export async function refreshAccessToken(): Promise<string | null> {
   const sessionId = getSessionId();
   if (!refreshToken || !sessionId) return null;
 
-  const res = await fetch("/api/auth/refresh", {
+  const res = await fetch(getApiUrl("/api/auth/refresh"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ session_id: sessionId, refresh_token: refreshToken }),
@@ -149,7 +159,7 @@ export async function authFetch(
 
   const isFormData = options.body instanceof FormData;
 
-  const response = await fetch(url, {
+  const response = await fetch(getApiUrl(url), {
     ...options,
     headers: {
       ...(options.headers ?? {}),

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveTokens, getDeviceLabel } from "@/lib/auth-client";
+import { saveTokens, getDeviceLabel, getApiUrl } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    const res = await fetch("/api/auth/login", {
+    const res = await fetch(getApiUrl("/api/auth/login"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

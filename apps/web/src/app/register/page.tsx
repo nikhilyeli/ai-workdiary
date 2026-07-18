@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveTokens, getDeviceLabel } from "@/lib/auth-client";
+import { saveTokens, getDeviceLabel, getApiUrl } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function RegisterPage() {
     setError(null);
     setLoading(true);
 
-    const res = await fetch("/api/auth/register", {
+    const res = await fetch(getApiUrl("/api/auth/register"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,0 +1,76 @@
+name: Deploy React App to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-app-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Temporarily move API routes out of src/app for static export
+        run: |
+          mv apps/web/src/app/api apps/web/api_temp
+
+      - name: Build Next.js App
+        env:
+          NEXT_STANDALONE_EXPORT: "true"
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+        run: npm run build
+
+      - name: Restore API routes
+        if: always()
+        run: |
+          if [ -d "apps/web/api_temp" ]; then
+            mv apps/web/api_temp apps/web/src/app/api
+          fi
+
+      - name: Setup Pages
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@v5
+
+      - name: Skip deploy when Pages is not enabled
+        if: steps.pages.outcome != 'success'
+        run: |
+          echo "::warning::GitHub Pages is not enabled for this repository. Skipping app deployment until Pages is configured to build with GitHub Actions."
+
+      - name: Upload app artifact
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./apps/web/out
+
+      - name: Deploy to GitHub Pages
+        if: steps.pages.outcome == 'success'
+        id: deployment
+        uses: actions/deploy-pages@v4
