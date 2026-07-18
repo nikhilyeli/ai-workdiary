@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Work Diary Docs</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 2rem auto;
+        max-width: 760px;
+        line-height: 1.6;
+        padding: 0 1rem;
+        color: #1f2937;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #374151; margin-top: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: .5rem; }
+      code {
+        background: #f4f4f5;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.25rem;
+        font-size: .9em;
+      }
+      a { color: #2563eb; }
+      ul { padding-left: 1.5rem; }
+      li { margin: 0.4rem 0; }
+      .note {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: .75rem 1rem;
+        border-radius: .25rem;
+        margin: 1.5rem 0;
+        font-size: .9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📓 AI Work Diary — Documentation</h1>
+
+    <div class="note">
+      This GitHub Pages site hosts project documentation only.
+      The full Next.js app requires a Node.js server and is not deployed here.
+      See the <a href="./guides/free-deployment.md">Free Deployment Guide</a> to run it.
+    </div>
+
+    <h2>🚀 Getting Started</h2>
+    <ul>
+      <li><a href="./guides/setup-complete.md">Complete Setup Guide</a> — clone, install, configure, and run</li>
+      <li><a href="./guides/configuration.md">Configuration Reference</a> — all environment variables and options</li>
+      <li><a href="./guides/usage.md">Usage Guide</a> — every feature explained</li>
+    </ul>
+
+    <h2>🌐 Deploying &amp; Sharing</h2>
+    <ul>
+      <li><a href="./guides/free-deployment.md">Free Deployment &amp; Dev Tunnel Options</a>
+        — VS Code Dev Tunnels · Cloudflare Tunnel · ngrok · localtunnel · Railway · Fly.io</li>
+    </ul>
+
+    <h2>📱 Browser-Based Apps (Window &amp; Mobile)</h2>
+    <ul>
+      <li><a href="./guides/pwa-install.md">PWA Install Guide</a>
+        — Install as a window app on Windows/macOS/Linux/Android/iOS (Atlas, Chrome, Edge, Opera, Firefox, Safari)</li>
+      <li><a href="./guides/electron.md">Electron Desktop App</a>
+        — Package as a native window app (Windows / macOS / Linux)</li>
+      <li><a href="./guides/capacitor.md">Capacitor Mobile App</a>
+        — Wrap as a native iOS / Android app</li>
+    </ul>
+
+    <h2>📖 Reference</h2>
+    <ul>
+      <li><a href="./setup.md">Quick Setup</a></li>
+      <li><a href="./user-guide.md">User Guide</a></li>
+      <li><a href="./security-notes.md">Security Notes</a></li>
+    </ul>
+
+    <h2>⚙️ CI status</h2>
+    <p>Branch protection recommendation: require status checks
+      <code>CI / Lint, test, build</code> and
+      <code>Playwright E2E / E2E tests</code>.
+    </p>
+  </body>
+</html>
